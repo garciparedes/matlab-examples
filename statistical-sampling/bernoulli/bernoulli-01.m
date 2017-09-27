@@ -11,44 +11,61 @@
 %}
 
 
-%Resolver el ejercico presentado en teoría
-%Tenemos 600 alumnos
-N=600;
-%Tomemos una muestra de Bernoulli con probabilidad de seleccion 1/6
+% Resolver el ejercico presentado en teoría
+% Tenemos 600 alumnos
+N = 600;
 
-%Simulemos los datos poblacionales para poder tomar la muestra
-datpob=unifrnd(0,10,N,1);
+% Tomemos una muestra de Bernoulli con probabilidad de seleccion 1/6
 
-%Considerara dos contadores
-contpi=0;
-contalt=0;
-%Repetir el proceso de tomar la muestra estimar la media con ICs con los
-%dos metodos nit=100 veces y comprobar cuantas veces los ICs contienen al
-%verdadero valor del parametro con objeto de confirmar que los ICs
-%obtenidos tienen la confianza deseada (95%)
+% Simulemos los datos poblacionales para poder tomar la muestra
+datpob = unifrnd(0, 10, N, 1);
+pi_k = 1 / 6;
+% Considerara dos contadores
+contpi = 0;
+contalt = 0;
 
-%Tomemos la muestra
+% Repetir el proceso de tomar la muestra estimar la media con ICs con los
+% dos metodos nit=100 veces y comprobar cuantas veces los ICs contienen al
+% verdadero valor del parametro con objeto de confirmar que los ICs
+% obtenidos tienen la confianza deseada (95%)
 
-%Utilizar una funcion para tomar la muestra
-%individuos que conforman la muestra
+% Tomemos la muestra
 
-%Tomemos las respuestas de los individuos seleccionados
+s = datpob(unifrnd(0, 1, N, 1) < pi_k);
 
-%Estimemos la nota media poblacional utilizandio las dos alternativas de
-%estimadores
 
-%piestimador de la nota total de los 600 alumnos
+% Utilizar una funcion para tomar la muestra
+% individuos que conforman la muestra
+I = selecmuesbernll(N, pi_k);
+% Tomemos las respuestas de los individuos seleccionados
+s = datpob(I);
 
-%Estimacion del ECM e la nota total de los 600 alumnos
+% Estimemos la nota media poblacional utilizandio las dos alternativas de
+% estimadores
 
-%Error de muestreo de la media poblacional
+% piestimador de la nota total de los 600 alumnos
+pi_estimador = sum(s)/pi_k;
 
-%Error de estimacion fijada una confianza del 95%
+% Estimacion del ECM e la nota total de los 600 alumnos
 
-%IC del 95% para mu es
+var_pi_estimador = (1 / pi_k) * (1 / pi_k-1) * sum(s .^ 2);
 
-%Comprobamos si el IC contiene al paremtro media poblacional
+% Error de muestreo de la media poblacional
+error_muestreo_pi_estimador = sqrt(var_pi_estimador);
 
+% Error de estimacion fijada una confianza del 95%
+
+alpha_value = 0.95;
+
+% IC del 95% para mu es
+IC_range = norminv(alpha_value / 2, 0, 1) * error_muestreo_pi_estimador;
+IC_izq = pi_estimador - IC_range;
+IC_der = pi_estimador + IC_range;
+[IC_izq, IC_der]
+pi_estimador
+sum(datpob)
+% Comprobamos si el IC contiene al parámetro media poblacional
+IC_izq < sum(datpob) && sum(datpob) < IC_der
 
 
 %Estimar el parametro total poblacional con el estimador alternativo
