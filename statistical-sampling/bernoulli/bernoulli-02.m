@@ -11,30 +11,36 @@
 %}
 
 
-%Resolver el ejercico presentado en teoría
-%Tenemos 600 alumnos
-N=600;
-%Tomemos una muestra de Bernoulli con probabilidad de seleccion 1/6
+% Resolver el ejercico presentado en teoría
+% Tenemos 600 alumnos
+N = 600;
 
-%Simulemos los datos poblacionales para poder tomar la muestra
-datpob=unifrnd(0,10,N,1);
+% Simulemos los datos poblacionales para poder tomar la muestra
+datpob = unifrnd(0, 10, N, 1);
 
-%Generara datos poblacionales para saber si el individuo aprueba 5 o no
-%aprueba
-Y=zeros(N,1);
-for i=1:N
-    if datpob(i,1)>=5
-        Y(i,1)=1;
-    else
-        Y(i,1)=0;
+% Generara datos poblacionales para saber si el individuo aprueba 5 o no aprueba
+Y = zeros(N, 1);
+for i = 1:N
+    if datpob(i, 1) >= 5
+        Y(i, 1) = 1;
     end
 end
 
-%Considermeos el parametro
-P=sum(Y)/N;
-%P=mean(Y)
-%este paramtro es proporcion de aprobados
+%Consideremos el parametro
+P = sum(Y) / N
+% este parámetro es proporcion de aprobados
 
-%Ejercio estimar P utilzando metodologia de Bernoulli con probabilidad de
-%seleccion de cada individuo de la poblacion pib=0.3 y las dos opciones de
-%estimadores
+% Ejercio estimar P utilizando metodologia de Bernoulli con probabilidad de
+% seleccion de cada individuo de la poblacion pib=0.3 y las dos opciones de
+% estimadores
+
+pi_k = 0.3;
+I = selecmuesbernll(N, pi_k);
+s = datpob(I);
+Ns = size(I, 1);
+
+pi_estimador_Y = sum(Y(I)) / pi_k;
+P_pi = pi_estimador_Y / N
+
+alt_estimador_Y = (N / Ns) * sum(Y(I));
+P_alt = alt_estimador_Y/N
