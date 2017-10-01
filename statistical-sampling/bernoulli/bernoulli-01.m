@@ -55,10 +55,10 @@ error_muestreo_pi_estimador = sqrt(var_pi_estimador);
 
 % Error de estimacion fijada una confianza del 95%
 
-alpha_value = 0.95;
+alpha_value = 0.05;
 
 % IC del 95% para mu es
-IC_range = norminv(alpha_value / 2, 0, 1) * error_muestreo_pi_estimador;
+IC_range = norminv(1-alpha_value / 2, 0, 1) * error_muestreo_pi_estimador;
 IC_izq = pi_estimador - IC_range;
 IC_der = pi_estimador + IC_range;
 [IC_izq, IC_der]
