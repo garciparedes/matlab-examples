@@ -11,13 +11,13 @@
   un error de estimacion y una confianza formula 55 y 56
 
   Input:
-    N tamaño de la poblacion
-    B error de estimacion
-    menalf confianza 1-alpha
-    s2 estimacion de la cuasivarianza poblacional
+    N: tamaño de la poblacion
+    B: error de estimacion
+    menalf: confianza 1-alpha
+    s2: estimacion de la cuasivarianza poblacional
 
 %}
-function n=caltamtaunmas(N,B,menalf,s2)
+function n = caltamtaunmas(N, B, menalf, s2)
   a=(1-menalf)/2;
   k=norminv(1-a,0,1);
   n0=N*N*k*k*s2/(B*B);
