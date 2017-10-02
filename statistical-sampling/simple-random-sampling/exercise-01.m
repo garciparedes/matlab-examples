@@ -16,10 +16,11 @@
   Col 3: D:HI
   Col 4: D:HII
 %}
+addpath(genpath('functions/'));
 DATA = load('../../data/adulvino.mat').datos;
-DATA = DATA(2:size(DATA,1),:);
+U = DATA(2:size(DATA,1),:);
 
 
-s_piloto = DATA(unifrnd(0, 1, size(DATA,1), 1) < 0.1,1);
+s_piloto = U(unifrnd(0, 1, size(U,1), 1) < 0.1,1);
 size(s_piloto,1)
 size(s_piloto(s_piloto >= 1525,1),1)
