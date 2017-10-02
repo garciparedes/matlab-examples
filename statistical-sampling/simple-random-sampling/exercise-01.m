@@ -24,17 +24,32 @@ N = size(U,1)
 
 T = size(U(U >= 1525),1)
 P = T/N
-TAU = sum(U)
-MU = TAU / N
+MU = mean(U)
 
 
 s_piloto = U(mas(N, 0.1 * N));
-n_piloto = size(s_piloto, 1)
-s2_piloto = var(s_piloto)
+n_piloto = size(s_piloto, 1);
+s2_piloto = var(s_piloto);
+p_piloto = size(s_piloto(s_piloto >= 1525), 1) / n_piloto;
 
-p_piloto = size(s_piloto(s_piloto >= 1525),1) /n_piloto;
-pq_est = ((N-1)*n_piloto) /(((n_piloto-1)*N)) * p_piloto;
-n_sp_mas = calcnPmas(size(U,1), 0.95, 0.1, pq_est);
+% Muestra Aleatoria Simple
+pq_est_mas = ((N-1) * n_piloto) / ((n_piloto - 1) * N) * p_piloto;
+n_s_mas = calcnPmas(size(U,1), 0.95, 0.1, pq_est_mas);
 
-sp_mas = U(mas(N, n_sp_mas));
-P_est = estPmascon(sp_mas >= 1525, 0.95)
+s_mas = U(mas(N, n_s_mas));
+
+% Resultados con Muestra Aleatoria Simple
+P_est_mas = mean(s_mas >= 1525)
+T_est_mas = N * P_est_mas
+MU_est_mas = mean(s_mas)
+
+% Muestra Aleatoria con Reemplazamiento
+pq_est_mascon = n_piloto / (n_piloto - 1) * p_piloto;
+n_s_mascon = (norminv(0.975, 0, 1) ^ 2 * pq_est_mascon) / 0.1 ^ 2;
+
+s_mascon = U(mascon(N, n_s_mascon));
+
+% Resultados con Muestra Aleatoria Simple
+P_est_mascon = mean(s_mascon >= 1525)
+T_est_mascon = N * P_est_mascon
+MU_est_mascon = mean(s_mascon)
