@@ -95,11 +95,20 @@ ci_mu_est2 = [mu_est2 - bound_mu_est2, mu_est2 + bound_mu_est2]
 % Ejercicio 8: Estimar la cantidad total a recaudar por todas las infracciones
 % cometidas en las Nobr2 obras de los constructores
 
-% Ejercicio 9: Esdtimar la Cantidad media a pagar por infracciones en cada una
+t_est3 = sum(s2(:,3)) / f2
+var_t_est3 = (N2 ^ 2 * (1 - f2)) / n2 * var(s2(:,3))
+bound_t_est3 = norminv(0.95, 0, 1) * sqrt(var_t_est3)
+ci_t_est3 = [t_est3 - bound_t_est3, t_est3 + bound_t_est3]
+
+% Ejercicio 9: Estimar la Cantidad media a pagar por infracciones en cada una
 % de las Nobr2 obras de los constructores
 
-% Ejercicio 10: Estimar la cantiodad media a pagar en cada infraccion
+t_est3 / Nobr2
+
+% Ejercicio 10: Estimar la cantidad media a pagar en cada infraccion
 % cometida por la constructora
+
+t_est3 / (mu_est2 * Nobr2)
 
 % Ejercicio 11: Determinar el tamaño de muestra de constructoras necesario
 % para reducir un 10% el error de muestreo cometido en Ejercicio 8
