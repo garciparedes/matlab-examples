@@ -62,11 +62,22 @@ nej5=calmumnmas(N1, 0.9 * bound1, 0.9, var(s1(:,2)))
 %
 
 
-N2 = size(DATA.obr,1)
-n2 = round(0.15 * N2)
+U2 = [DATA.obr, DATA.coinf, DATA.comul, DATA.cons];
+N2 = size(U2,1);
+n2 = round(0.15 * N2);
 I2 = mas(N2, n2);
+
+f2 = n1 / N1;
+s2 = U2(I2,:);
+
 % Ejercicio 6: Estimar el total de obras realizadas por las 60 constructoras
 
+
+t_est2 = sum(s2(:,1))  / f2
+var_t_est2 = (N2 ^ 2 * (1 - f2)) / n2 * var(s2(:,1));
+bound_t_est2 = norminv(0.95, 0, 1) * sqrt(var_t_est2);
+
+ci_t_est2 = [t_est2 - bound_t_est2,  t_est2 + bound_t_est2]
 
 %Variable Conocida
 Nobr2=sum(DATA.obr)
@@ -74,7 +85,14 @@ Nobr2=sum(DATA.obr)
 % Ejercicio 7:Estimar el numero medio de infracciones cometido en cada
 % obra de los constructores
 
-% Ejercicio 8: Estimar la cantidad total a recuadar por todas las infracciones
+s2_inf_obr = s2(:, 2) ./ s2(:, 1)
+mu_est2 = mean(s2_inf_obr)
+
+var_mu_est2 = var(s2_inf_obr)
+bound_mu_est2 = norminv(0.95, 0, 1) * sqrt(var_mu_est2)
+ci_mu_est2 = [mu_est2 - bound_mu_est2, mu_est2 + bound_mu_est2]
+
+% Ejercicio 8: Estimar la cantidad total a recaudar por todas las infracciones
 % cometidas en las Nobr2 obras de los constructores
 
 % Ejercicio 9: Esdtimar la Cantidad media a pagar por infracciones en cada una
