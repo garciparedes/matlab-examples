@@ -112,3 +112,5 @@ t_est3 / (mu_est2 * Nobr2)
 
 % Ejercicio 11: Determinar el tamaño de muestra de constructoras necesario
 % para reducir un 10% el error de muestreo cometido en Ejercicio 8
+
+t_est3_muest = caltamtaunmas(N2, 0.9 * bound_t_est3, 0.9, var(s2(:,3)))
