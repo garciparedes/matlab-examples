@@ -36,7 +36,7 @@ k = norminv(confianza, 0,1)
 
 
 
-n1 = calcnPmas(N1, confianza, 0.051)
+n1 = calcnPmas(N1, alpha, 0.051)
 f1 = n1 / N1;
 i1 = mas(N1, n1);
 s1 = U1(i1,:);
