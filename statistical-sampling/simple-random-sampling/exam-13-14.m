@@ -24,6 +24,8 @@ U = [DATA.Y1, DATA.Y2];
 N = size(U,1)
 
 mu1 = mean(U(:,1))
+p2 = mean(U(:,2))
+taud2 = sum(U(:,1)) * p2
 %{
   Objetivo 1:
     Estimar el total de naranjas y el número medio de naranjas de cada caja.
@@ -74,3 +76,21 @@ mu1_est1_mascon_ic = [mu1_est1_mascon - mu1_est1_mascon_bound, mu1_est1_mascon +
     calculado y estimar los parámetros. (Hacerlo para m.a.s. con y sin
     reemplazamiento)
 %}
+
+k2 = norminv(0.975, 0, 1);
+
+n2 = calcnPmas(N, 0.95, 0.05)
+f2 = n2 /N;
+
+i2_mas = mas(N,n2);
+s2_mas = U(i2_mas, :);
+
+p2_est = mean(s2_mas(:,2))
+p2_est_var = (1-f2) / (n2 - 1) * p2_est * (1 - p2_est);
+p2_est_bound = k2 * sqrt(p2_est_var);
+p2_est_ic = [p2_est - p2_est_bound, p2_est + p2_est_bound]
+
+taud2_est = sum(s2_mas(:,1)) / f2 * p2_est;
+taud2_est_var = N ^ 2 * (1 - f2) * (p2_est * (var(s2_mas(:,1)) * n2 /(n2-1) + (1- p2_est) * mean(s2_mas(:,1)) ^ 2)) / n2
+taud2_est_bound = k2 * sqrt(taud2_est_var);
+taud2_est_ic = [taud2_est - taud2_est_bound, taud2_est + p2_est_bound]
