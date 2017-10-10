@@ -85,12 +85,27 @@ f2 = n2 /N;
 i2_mas = mas(N,n2);
 s2_mas = U(i2_mas, :);
 
-p2_est = mean(s2_mas(:,2))
-p2_est_var = (1-f2) / (n2 - 1) * p2_est * (1 - p2_est);
-p2_est_bound = k2 * sqrt(p2_est_var);
-p2_est_ic = [p2_est - p2_est_bound, p2_est + p2_est_bound]
+p2_est_mas = mean(s2_mas(:,2))
+p2_est_mas_var = (1-f2) / (n2 - 1) * p2_est_mas * (1 - p2_est_mas);
+p2_est_mas_bound = k2 * sqrt(p2_est_mas_var);
+p2_est_mas_ic = [p2_est_mas - p2_est_mas_bound, p2_est_mas + p2_est_mas_bound]
 
-taud2_est = sum(s2_mas(:,1)) / f2 * p2_est;
-taud2_est_var = N ^ 2 * (1 - f2) * (p2_est * (var(s2_mas(:,1)) * n2 /(n2-1) + (1- p2_est) * mean(s2_mas(:,1)) ^ 2)) / n2
-taud2_est_bound = k2 * sqrt(taud2_est_var);
-taud2_est_ic = [taud2_est - taud2_est_bound, taud2_est + p2_est_bound]
+taud2_est_mas = sum(s2_mas(:,1)) / f2 * p2_est_mas
+taud2_est_mas_var = N ^ 2 * (1 - f2) * (p2_est_mas * (var(s2_mas(:,1)) * n2 /(n2-1) + (1- p2_est_mas) * mean(s2_mas(:,1)) ^ 2)) / n2
+taud2_est_mas_bound = k2 * sqrt(taud2_est_mas_var);
+taud2_est_mas_ic = [taud2_est_mas - taud2_est_mas_bound, taud2_est_mas + p2_est_mas_bound]
+
+
+i2_mascon = mascon(N,n2);
+s2_mascon = U(i2_mascon, :);
+
+p2_est_mascon = mean(s2_mas(:,2))
+p2_est_mascon_var =  p2_est * (1 - p2_est) / (n2 - 1);
+p2_est_mascon_bound = k2 * sqrt(p2_est_mascon_var);
+p2_est_mascon_ic = [p2_est_mascon - p2_est_mascon_bound, p2_est_mascon + p2_est_mascon_bound]
+
+
+taud2_est_mascon = sum(s2_mascon(:,1)) / f2 * p2_est_mascon
+taud2_est_mascon_var = N ^ 2 * (1 - f2) * (p2_est_mascon * (var(s2_mascon(:,1)) * n2 /(n2-1) + (1- p2_est_mascon) * mean(s2_mascon(:,1)) ^ 2)) / n2;
+taud2_est_mascon_bound = k2 * sqrt(taud2_est_mascon_var);
+taud2_est_mascon_ic = [taud2_est_mascon - taud2_est_mascon_bound, taud2_est_mascon + taud2_est_mascon_bound]
