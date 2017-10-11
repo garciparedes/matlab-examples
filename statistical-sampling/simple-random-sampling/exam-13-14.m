@@ -9,8 +9,9 @@
   Name: simple-random-sampling/exam-15-16.m
 
 %}
-addpath(genpath('functions/'));
+clear;
 
+addpath(genpath('functions/'));
 
 %{
   Un almacén mayorista dispone de un cargamento compuesto por 1500 cajas de
@@ -26,6 +27,7 @@ N = size(U,1)
 mu1 = mean(U(:,1))
 p2 = mean(U(:,2))
 taud2 = sum(U(:,1)) * p2
+
 %{
   Objetivo 1:
     Estimar el total de naranjas y el número medio de naranjas de cada caja.
@@ -100,7 +102,7 @@ i2_mascon = mascon(N,n2);
 s2_mascon = U(i2_mascon, :);
 
 p2_est_mascon = mean(s2_mas(:,2))
-p2_est_mascon_var =  p2_est * (1 - p2_est) / (n2 - 1);
+p2_est_mascon_var =  p2_est_mascon * (1 - p2_est_mascon) / (n2 - 1);
 p2_est_mascon_bound = k2 * sqrt(p2_est_mascon_var);
 p2_est_mascon_ic = [p2_est_mascon - p2_est_mascon_bound, p2_est_mascon + p2_est_mascon_bound]
 

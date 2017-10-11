@@ -9,6 +9,8 @@
   Name: simple-random-sampling/exam-15-16.m
 
 %}
+clear;
+
 addpath(genpath('functions/'));
 
 DATA = load('../../data/datcont1415.mat');

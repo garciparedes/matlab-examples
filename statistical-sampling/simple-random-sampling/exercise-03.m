@@ -10,6 +10,7 @@
 
 %}
 clear;
+
 addpath(genpath('functions/'));
 
 
@@ -26,7 +27,7 @@ p_piloto = sum(s_piloto(:, 1) <= 111) / n_piloto
 
 pq_piloto_est_mas = ((N - 1) * n_piloto) / (N * (n_piloto - 1)) * p_piloto * (1 - p_piloto);
 
-n_s_mas = calcnPmas(N, 0.99, 0.15, pq_piloto_est_mas)
+n_s_mas = calcnPmasEst(N, 0.99, 0.15, pq_piloto_est_mas)
 i_mas = mas(N, n_s_mas);
 s_mas = U(i_mas, :);
 p_mas = sum(s_mas(:, 1) <= 111) / n_s_mas;

@@ -19,11 +19,11 @@
     n tamaño de la muestra
 
 %}
-function n = calcnPmas(N, c, B)
+function n = calcnPmasEst(N, c, B, pq)
   aux1 = (1 - c) / 2;
   aux2 = 1 - aux1;
   k = norminv(aux2, 0, 1);
-  n0 = k ^ 2 * 0.25 * N / (B ^ 2 * (N - 1));
+  n0 = k ^ 2 * pq * N / (B ^ 2 * (N - 1));
   n = n0 / ((n0 / N) + 1);
   n = ceil(n);
 end

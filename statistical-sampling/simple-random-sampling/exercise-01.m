@@ -9,6 +9,7 @@
   Name: simple-random-sampling/exercise-01.m
 
 %}
+clear;
 
 addpath(genpath('functions/'));
 
@@ -34,7 +35,7 @@ p_piloto = size(s_piloto(s_piloto >= 1525), 1) / n_piloto;
 
 % Muestra Aleatoria Simple
 pq_est_mas = ((N-1) * n_piloto) / ((n_piloto - 1) * N) * p_piloto;
-n_s_mas = calcnPmas(size(U,1), 0.95, 0.1, pq_est_mas);
+n_s_mas = calcnPmasEst(size(U,1), 0.95, 0.1, pq_est_mas);
 
 s_mas = U(mas(N, n_s_mas));
 

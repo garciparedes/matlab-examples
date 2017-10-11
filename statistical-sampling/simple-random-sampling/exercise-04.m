@@ -10,6 +10,7 @@
 
 %}
 clear;
+
 addpath(genpath('functions/'));
 
 N_abogados = 650;
