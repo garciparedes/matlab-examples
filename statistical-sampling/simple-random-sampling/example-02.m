@@ -14,7 +14,7 @@ clear;
 
 addpath(genpath('functions/'));
 
-%Segundo ejemplo de teoria
+% Segundo ejemplo de teoria
 
 % Registros contables de un hospital
 % Auditoria con el fin de estimar la cantidad total que falta por cobrar
@@ -32,6 +32,7 @@ Y = unifrnd(0, 1500, 28000, 1);
 Z = Y >= 1000;
 
 pZ = mean(Z)
+
 
 % Ejercicio 1:
 %   Tomar una m.a.s. de 280 individuos para estimar el parametro proporcion de
