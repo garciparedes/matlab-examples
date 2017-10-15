@@ -15,10 +15,11 @@ clear;
 addpath(genpath('functions/'));
 
 % Primer ejemplo de teoria
+
 % Registros contables de un hospital
 % Auditoria con el fin de estimar la cantidad total que falta por cobrar
 % Tamaño población registros por auditorar
-N=28000;
+N = 28000;
 
 % Generamos la cantidad que falta por cobrar en esas 28000 registros
 % Variable de interés:
