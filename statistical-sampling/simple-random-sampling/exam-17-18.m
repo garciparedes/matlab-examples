@@ -5,7 +5,7 @@
 
 clear;
 
-addpath(genpath('functions/'));
+addpath(genpath('./../utils/'));
 
 DATA = load('../../data/datmas2017.mat');
 

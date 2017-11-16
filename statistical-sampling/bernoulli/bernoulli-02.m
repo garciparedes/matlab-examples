@@ -10,6 +10,9 @@
 
 %}
 
+clear;
+
+addpath(genpath('./../utils/'));
 
 % Resolver el ejercico presentado en teoría
 % Tenemos 600 alumnos

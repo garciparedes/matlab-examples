@@ -12,7 +12,7 @@
 
 clear;
 
-addpath(genpath('functions/'));
+addpath(genpath('./../utils/'));
 
 % Primer ejemplo de teoria
 

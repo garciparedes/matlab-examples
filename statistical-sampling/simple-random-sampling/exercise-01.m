@@ -11,7 +11,7 @@
 %}
 clear;
 
-addpath(genpath('functions/'));
+addpath(genpath('./../utils/'));
 
 %{
   Col 1: Myoinositol

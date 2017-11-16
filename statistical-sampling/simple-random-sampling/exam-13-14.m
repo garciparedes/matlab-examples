@@ -11,7 +11,7 @@
 %}
 clear;
 
-addpath(genpath('functions/'));
+addpath(genpath('./../utils/'));
 
 %{
   Un almacén mayorista dispone de un cargamento compuesto por 1500 cajas de

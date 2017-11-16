@@ -11,7 +11,7 @@
 %}
 clear;
 
-addpath(genpath('functions/'));
+addpath(genpath('./../utils/'));
 
 N_abogados = 650;
 N_despachos = 35;

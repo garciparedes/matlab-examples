@@ -11,7 +11,7 @@
 %}
 clear;
 
-addpath(genpath('functions/'));
+addpath(genpath('./../utils/'));
 
 
 DATA = load('../../data/soldsuiz.mat');
