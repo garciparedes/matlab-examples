@@ -3,7 +3,7 @@
   Universits: Universidad de Valladolid
   Degree: Grado en Estadística
   Subject: Muestreo Estadístico 1
-  sear: 2017/18
+  year: 2017/18
   Teacher: Jesús Alberto Tapia García
   Author: Sergio García Prado (garciparedes.me)
   Name: stratified-sampling/exercise-01.m
@@ -83,4 +83,4 @@ var_test(s(:,3),s(:,4))
 
 B = 0.9 * mu_est_EMUEST;
 k = norminv(1-(1-0.95)/2);
-n_new = (sum(W_h .^ 2  .* S2_h ./ w_h) ) ./ ((B ^ 2 / k ^ 2)  + sum(W_h .^2  .* S2_h ./ N_h))
+n_new = ceil((sum(W_h .^ 2  .* S2_h ./ w_h) ) ./ ((B ^ 2 / k ^ 2)  + sum(W_h .^2  .* S2_h ./ N_h)))
