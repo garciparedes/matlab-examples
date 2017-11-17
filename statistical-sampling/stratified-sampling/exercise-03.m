@@ -93,8 +93,7 @@ w_h_mas = N_h .* sqrt(P_est_mas_var) ./ sum(N_h .* sqrt(P_est_mas_var));
 
 n_mas_new = ceil(sum(W_h .^ 2 .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* w_h_mas)) ./ (B_mas ^ 2 / k ^ 2 + sum(W_h .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* N))))
 
-% TODO change to min_variance estimator
-n_h_mas_new = ceil(n_mas_new .* W_h);
+n_h_mas_new = ceil(n_mas_new .* N_h .* P_est_mascon_sqrt ./ sum(N_h .* P_est_mascon_sqrt));
 f_h_mas_new = n_h_mas_new ./ N_h;
 
 i_1_mas_new = mas(N_h(1), n_h_mas_new(1));
@@ -126,8 +125,7 @@ w_h_mascon = N_h .* sqrt(P_est_mascon_var) ./ sum(N_h .* sqrt(P_est_mascon_var))
 
 n_mascon_new = ceil(sum(W_h .^ 2 .* P_h_est_mascon .* (1 .- P_h_est_mascon) .* k .^ 2 ./ (B_mascon .^ 2 .* w_h_mascon)) + B_mascon^2 / k ^ 2)
 
-% TODO change to min_variance estimator
-n_h_mascon_new = ceil(n_mascon_new .* W_h);
+n_h_mascon_new = ceil(n_mascon_new .* N_h .* P_est_mas_new_sqrt ./ sum(N_h .* P_est_mas_new_sqrt));
 
 i_1_mascon_new = mascon(N_h(1), n_h_mascon_new(1));
 i_2_mascon_new = mascon(N_h(2), n_h_mascon_new(2));
@@ -145,16 +143,26 @@ P_est_mascon_new_sqrt = sqrt(P_est_mascon_new_var);
 P_est_mascon_new_bound = k * P_est_mascon_new_sqrt;
 P_est_mascon_new_ic = [P_est_mascon_new - P_est_mascon_new_bound, P_est_mascon_new + P_est_mascon_new_bound]
 
-
 %{
   M.A.S en todos los estratos
   Afijación de mínima varianza
   Contraste igualdad de P en estratos
 %}
 
+P_h_est_mas_new
+P_h_est_mas_new_var = P_h_est_mas_new .* (1 .- P_h_est_mas_new) .* (1 .- f_h_mas_new) ./ (n_h_mas_new .- 1);
+P_h_est_mas_new_sqrt = sqrt(P_h_est_mas_new_var);
+P_h_est_mas_new_bound = k .* P_h_est_mas_new_sqrt;
+P_h_est_mas_new_ic = [(P_h_est_mas_new .- P_h_est_mas_new_bound)', (P_h_est_mas_new .+ P_h_est_mas_new_bound)']
 
 %{
   M.A.Scon en todos los estratos
   Afijación de mínima varianza
   Contraste igualdad de P en estratos
 %}
+
+P_h_est_mascon_new
+P_h_est_mascon_new_var = P_h_est_mascon_new .* (1 .- P_h_est_mascon_new) ./ (n_h_mascon_new .- 1);
+P_h_est_mascon_new_sqrt = sqrt(P_h_est_mascon_new_var);
+P_h_est_mascon_new_bound = k .* P_h_est_mascon_new_sqrt;
+P_h_est_mascon_new_ic = [(P_h_est_mascon_new .- P_h_est_mascon_new_bound)', (P_h_est_mascon_new .+ P_h_est_mascon_new_bound)']
