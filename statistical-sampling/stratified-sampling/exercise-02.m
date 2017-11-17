@@ -41,7 +41,7 @@ var_h = P_h .* (1 .- P_h);
 B = 0.1;
 k = norminv(1 - (1 - 0.95) / 2);
 
-n_h = round(sum(W_h .* sqrt(var_h)) .* (W_h .* sqrt(var_h)) ./ (sum(W_h .* var_h)./N + B ^ 2 / k ^ 2))
+n_h = ceil(sum(W_h .* sqrt(var_h)) .* (W_h .* sqrt(var_h)) ./ (sum(W_h .* var_h)./N + B ^ 2 / k ^ 2))
 n = sum(n_h);
 f_h = n_h ./ N_h;
 w_h = n_h ./ n;
@@ -60,8 +60,8 @@ P_h_est = [mean(s_1(:,4) < 3750), mean(s_2(:,4) < 3750), mean(s_3(:,4) < 3750)];
 P_est = sum(W_h .* P_h_est)
 P_est_var = sum((P_h_est .* (1 .- P_h_est) .* (1 .- f_h) .* W_h .^ 2) ./ (n_h .- 1));
 P_est_std = sqrt(P_est_var);
-P_est_emuest = k * P_est_std;
-P_est_ic = [P_est - P_est_emuest, P_est + P_est_emuest]
+P_est_bound = k * P_est_std;
+P_est_ic = [P_est - P_est_bound, P_est + P_est_bound]
 
 %{
   2)  Utilizar los datos del apartado i) como una muestra piloto con objeto de
@@ -73,9 +73,9 @@ P_est_ic = [P_est - P_est_emuest, P_est + P_est_emuest]
 B = 0.9 * P_est_std;
 k = norminv(1 - (1 - 0.95) / 2);
 
-n_new = round(sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h .^ 2 ./ w_h)) ./ (B^2./k^2 + sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h./ N))))
+n_new = ceil(sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h .^ 2 ./ w_h)) ./ (B^2./k^2 + sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h./ N))))
 
-n_h_new = round(n_new .* (N_h .* sqrt(P_est_var)) ./ sum(N_h .* sqrt(P_est_var)))
+n_h_new = ceil(n_new .* (N_h .* sqrt(P_est_var)) ./ sum(N_h .* sqrt(P_est_var)))
 f_h_new = n_h_new ./ N_h;
 
 i_1_new = mas(N_h(1),n_h_new(1));
@@ -92,8 +92,8 @@ P_h_est_new = [mean(s_1_new(:,4) < 3750), mean(s_2_new(:,4) < 3750), mean(s_3_ne
 P_est_new = sum(W_h .* P_h_est_new)
 P_est_var_new = sum((P_est_new .* (1 .- P_est_new) .* (1 .- f_h_new) .* W_h .^ 2) ./ (n_h_new .- 1));
 P_est_std_new = sqrt(P_est_var_new);
-P_est_emuest_new = k * P_est_std_new;
-P_est_ic_new = [P_est_new - P_est_emuest_new, P_est_new + P_est_emuest_new]
+P_est_bound_new = k * P_est_std_new;
+P_est_ic_new = [P_est_new - P_est_bound_new, P_est_new + P_est_bound_new]
 
 %{
   3) Con la muestra determinada en el apartado ii) estimar el valor medio de
@@ -103,8 +103,8 @@ P_est_ic_new = [P_est_new - P_est_emuest_new, P_est_new + P_est_emuest_new]
 mu_est = sum([mean(s_1_new(:,1)), mean(s_2_new(:,1)), mean(s_3_new(:,1))] .* N_h) / N
 mu_est_var = sum(W_h .^ 2 .* (1 .- f_h_new) .* [std(s_1_new(:,1)), std(s_2_new(:,1)), std(s_3_new(:,1))] .^ 2 ./ n_h_new);
 mu_est_std = sqrt(mu_est_var);
-mu_est_emuest = k * mu_est_std;
-mu_est_ic = [mu_est - mu_est_emuest, mu_est + mu_est_emuest]
+mu_est_bound = k * mu_est_std;
+mu_est_ic = [mu_est - mu_est_bound, mu_est + mu_est_bound]
 
 p = sum([mean(U_1(:,4) < 3750), mean(U_2(:,4) < 3750), mean(U_3(:,4) < 3750)] .* W_h)
 mu = sum([mean(U_1(:,1)), mean(U_2(:,1)), mean(U_3(:,1))] .* W_h)

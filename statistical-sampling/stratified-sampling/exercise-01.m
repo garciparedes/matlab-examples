@@ -55,8 +55,8 @@ mu_est = sum(sum(s) ./ f_h) / N
 S2_h = n_h ./ (n_h - 1)  .* std(s) .^ 2
 
 mu_est_ECM = sum(( (W_h .^ 2) .* ( 1 .- f_h) .* S2_h ) ./ n_h )
-mu_est_EEST = sqrt(mu_est_ECM)
-mu_est_EMUEST = norminv(1 - (1 - 0.95)/2) * mu_est_EEST
+mu_est_EMUEST = sqrt(mu_est_ECM)
+mu_est_EEST = norminv(1 - (1 - 0.95)/2) * mu_est_EMUEST
 
 %{
   En cuanto a la respuesta sobre si es mejor usar afijación proporcional o de
