@@ -6,7 +6,7 @@
   year: 2017/18
   Teacher: Jesús Alberto Tapia García
   Author: Sergio García Prado (garciparedes.me)
-  Name: stratified-sampling/exercise-03.m
+  Name: stratified-sampling/exercise-04.m
 
 %}
 clear;
