@@ -118,7 +118,6 @@ B_new_mas_P = (1 - 0.1) * P_mas_std;
 w_h_new_mas_P = N_h .* P_h_mas_s2 ./ sum(N_h .* P_h_mas_s2);
 
 n_new_mas_P = round(sum(W_h  .^ 2 .* P_h_mas_s2 ./ w_h_new_mas_P) ./ (B_new_mas_P .^ 2 ./ k .^ 2 .+ sum(W_h ./ N .* P_h_mas_s2)))
-
 %{
     Variable Y
 %}
@@ -178,7 +177,7 @@ n_h_new_mas_mu = floor(W_h .* sqrt(mu_h_mas_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt
 
 
 %{
-  Muestreo m.a.s.con en cada estrato
+  Muestreo m.a.s. en primer estrato y m.a.s.con en segundo
 %}
 
 %{
@@ -191,3 +190,41 @@ n_h_new_mix_P = floor(W_h .* sqrt(P_h_mix_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt(P
     Variable Y
 %}
 n_h_new_mix_mu = floor(W_h .* sqrt(mu_h_mix_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt(mu_h_mix_s2) .* sqrt(C_h)) ./ C))
+
+%{
+  Contraste de hipótesis de igualdad de proporciones P
+%}
+
+%{
+  Muestreo m.a.s en cada estrato con tamaño n_new_mas_P
+%}
+
+n_h_contrast_mas_P = n_new_mas_P .* w_h_new_mas_P;
+f_h_contrast_mas_P = n_h_contrast_mas_P ./ N_h;
+
+s_1_contrast_mas = U_1(mas(N_h(1), n_h_contrast_mas_P(1)),1);
+s_2_contrast_mas = U_2(mas(N_h(2), n_h_contrast_mas_P(2)),1);
+
+p_h_est_contrast_mas = [mean(s_1_contrast_mas), mean(s_2_contrast_mas)];
+p_h_est_contrast_mas_var = (1 .- f_h_contrast_mas_P) .* p_h_est_contrast_mas .* (1 .- p_h_est_contrast_mas) ./ (n_h_contrast_mas_P .- 1);
+p_h_est_contrast_mas_std = sqrt(p_h_est_contrast_mas_var);
+p_h_est_contrast_mas_bound = k * p_h_est_contrast_mas_std;
+p_h_est_contrast_mas_ic = [(p_h_est_contrast_mas .- p_h_est_contrast_mas_bound)', (p_h_est_contrast_mas .+ p_h_est_contrast_mas_bound)']
+
+
+%{
+  Muestreo m.a.s. en primer estrato y m.a.s.con en segundo
+%}
+
+n_h_contrast_mix_P = n_new_mix_P .* w_h_new_mix_P;
+f_h_contrast_mix_P = n_h_contrast_mix_P ./ N_h;
+
+s_1_contrast_mix = U_1(mas(N_h(1), n_h_contrast_mix_P(1)),1);
+s_2_contrast_mix = U_2(mascon(N_h(2), n_h_contrast_mix_P(2)),1);
+
+
+p_h_est_contrast_mix = [mean(s_1_contrast_mix), mean(s_2_contrast_mix)];
+p_h_est_contrast_mix_var = (1 .- [f_h_contrast_mix_P(1), 0]) .* p_h_est_contrast_mix .* (1 .- p_h_est_contrast_mix) ./ (n_h_contrast_mix_P .- 1);
+p_h_est_contrast_mix_std = sqrt(p_h_est_contrast_mix_var);
+p_h_est_contrast_mix_bound = k * p_h_est_contrast_mix_std;
+p_h_est_contrast_mix_ic = [(p_h_est_contrast_mix .- p_h_est_contrast_mix_bound)', (p_h_est_contrast_mix .+ p_h_est_contrast_mix_bound)']
