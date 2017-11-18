@@ -103,7 +103,6 @@ mu_mix_std = sqrt(mu_mix_var)
 mu_mix_bound = k * mu_mix_std;
 mu_mix_ic = [mu_mix - mu_mix_bound, mu_mix + mu_mix_bound]
 
-
 %{
   Reducción del error muestreo 10%
 %}
@@ -143,6 +142,7 @@ n_new_mix_P = round(sum([
   (W_h(1) .^ 2 .* P_h_mix_s2(1) ./ w_h_new_mix_P(1)) ./ (B_new_mix_P .^ 2 ./ k .^ 2 .+ W_h(1) ./ N .* P_h_mas_s2(1)),
   W_h(2) .^ 2 .* P_h_mix_s2(2) .* k .^ 2 ./ (B_new_mix_P .^ 2 .* w_h_new_mix_P(2))
 ]))
+
 %{
     Variable Y
 %}
@@ -154,3 +154,40 @@ n_new_mix_mu = round(sum([
   (W_h(1) .^ 2 .* mu_h_mix_s2(1) ./ w_h_new_mix_mu(1)) ./ (B_new_mix_mu .^ 2 ./ k .^ 2 .+ W_h(1) .^ 2 ./ N_h(1) .* mu_h_mas_s2(1))
   W_h(2) .^ 2 .* mu_h_mix_s2(2) .* k .^ 2 ./ (B_new_mix_mu .^ 2 .* w_h_new_mix_mu(2))
 ]))
+
+%{
+  Ahora presupuesto C = 1000 y c_1 = 70 y c_2 = 100
+%}
+C = 1000;
+C_h = [70, 100];
+
+%{
+  Muestreo m.a.s. en cada estrato
+%}
+
+%{
+    Variable X
+%}
+n_h_new_mas_P = floor(W_h .* sqrt(P_h_mas_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt(P_h_mas_s2) .* sqrt(C_h)) ./ C))
+
+
+%{
+    Variable Y
+%}
+n_h_new_mas_mu = floor(W_h .* sqrt(mu_h_mas_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt(mu_h_mas_s2) .* sqrt(C_h)) ./ C))
+
+
+%{
+  Muestreo m.a.s.con en cada estrato
+%}
+
+%{
+    Variable X
+%}
+n_h_new_mix_P = floor(W_h .* sqrt(P_h_mix_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt(P_h_mix_s2) .* sqrt(C_h)) ./ C))
+
+
+%{
+    Variable Y
+%}
+n_h_new_mix_mu = floor(W_h .* sqrt(mu_h_mix_s2) ./ (sqrt(C_h) .* sum(W_h .* sqrt(mu_h_mix_s2) .* sqrt(C_h)) ./ C))
