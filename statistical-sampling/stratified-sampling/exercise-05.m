@@ -73,10 +73,10 @@ p_h_est_ic = [(p_h_est - p_h_est_bound)', (p_h_est + p_h_est_bound)']
 %}
 
 n
-B = k * ((1 - 0.0) * p_est_std);
-w_h = N_h .* s_h_S2 ./ sum(N_h .* s_h_S2);
+B = p_est_bound;
+w_h = n_h ./ n;
 n_new = round(sum([
-  (W_h(1) .^ 2  .* s_h_S2(1) ./ w_h(1) ) ./ (B .^ 2 ./ k .^ 2 .+ W_h(1) .^ 2 ./ N_h(1) .* s_h_S2(1)),
+  (W_h(1) .^ 2  .* s_h_S2(1) ./ w_h(1) ) ./ (B .^ 2 ./ k .^ 2 .+ W_h(1) .^ 2 .* s_h_S2(1) ./ N_h(1)),
   W_h(2) .^ 2 .* s_h_S2(2) .* k .^ 2 ./ (B .^ 2 .* w_h(2))
 ]))
 
