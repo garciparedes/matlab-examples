@@ -41,7 +41,7 @@ var_h = P_h .* (1 .- P_h);
 B = 0.1;
 k = norminv(1 - (1 - 0.95) / 2);
 
-n_h = ceil(sum(W_h .* sqrt(var_h)) .* (W_h .* sqrt(var_h)) ./ (sum(W_h .* var_h)./N + B ^ 2 / k ^ 2))
+n_h = round(sum(W_h .* sqrt(var_h)) .* (W_h .* sqrt(var_h)) ./ (sum(W_h .* var_h)./N + B ^ 2 / k ^ 2))
 n = sum(n_h);
 f_h = n_h ./ N_h;
 w_h = n_h ./ n;
@@ -70,12 +70,12 @@ P_est_ic = [P_est - P_est_bound, P_est + P_est_bound]
     del 95%.
 %}
 
-B = 0.9 * P_est_std;
 k = norminv(1 - (1 - 0.95) / 2);
+B = 0.9 * P_est_bound;
 
-n_new = ceil(sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h .^ 2 ./ w_h)) ./ (B^2./k^2 + sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h./ N))))
+n_new = round(sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h .^ 2 ./ w_h)) ./ (B^2./k^2 + sum(P_h_est .* (1 .- P_h_est) .* (N_h ./ (N_h .- 1)) .* (W_h./ N))))
 
-n_h_new = ceil(n_new .* (N_h .* sqrt(P_est_var)) ./ sum(N_h .* sqrt(P_est_var)))
+n_h_new = round(n_new .* (N_h .* sqrt(P_est_var)) ./ sum(N_h .* sqrt(P_est_var)))
 f_h_new = n_h_new ./ N_h;
 
 i_1_new = mas(N_h(1),n_h_new(1));

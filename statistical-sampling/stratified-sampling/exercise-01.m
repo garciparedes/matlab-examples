@@ -80,7 +80,7 @@ var_test(s(:,3),s(:,4))
     muestra necesario y su afijación si se quiere reducir un 10% el error de
     muestreo a la hora de estimar el mismo parámetro que en el apartado ii).
 %}
-
-B = 0.9 * mu_est_EMUEST;
 k = norminv(1-(1-0.95)/2);
-n_new = ceil((sum(W_h .^ 2  .* S2_h ./ w_h) ) ./ ((B ^ 2 / k ^ 2)  + sum(W_h .^2  .* S2_h ./ N_h)))
+
+B = k * (0.9 * mu_est_EMUEST);
+n_new = round((sum(W_h .^ 2  .* S2_h ./ w_h) ) ./ ((B ^ 2 / k ^ 2)  + sum(W_h .^2  .* S2_h ./ N_h)))

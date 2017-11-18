@@ -114,14 +114,14 @@ mu_mix_ic = [mu_mix - mu_mix_bound, mu_mix + mu_mix_bound]
 %{
     Variable X
 %}
-B_new_mas_P = (1 - 0.1) * P_mas_std;
+B_new_mas_P = k * (1 - 0.1) * P_mas_std;
 w_h_new_mas_P = N_h .* P_h_mas_s2 ./ sum(N_h .* P_h_mas_s2);
 
 n_new_mas_P = round(sum(W_h  .^ 2 .* P_h_mas_s2 ./ w_h_new_mas_P) ./ (B_new_mas_P .^ 2 ./ k .^ 2 .+ sum(W_h ./ N .* P_h_mas_s2)))
 %{
     Variable Y
 %}
-B_new_mas_mu = (1 - 0.1) * mu_mas_std;
+B_new_mas_mu = k * (1 - 0.1) * mu_mas_std;
 w_h_new_mas_mu = N_h .* mu_h_mas_s2 ./ sum(N_h .* mu_h_mas_s2);
 
 n_new_mas_mu = round(sum(W_h .^ 2 .* mu_h_mas_s2 ./ w_h_new_mas_mu) ./ (B_new_mas_mu .^ 2 ./ k .^ 2 .+ sum(W_h .^ 2 ./ N_h .* mu_h_mas_s2)))
@@ -133,7 +133,7 @@ n_new_mas_mu = round(sum(W_h .^ 2 .* mu_h_mas_s2 ./ w_h_new_mas_mu) ./ (B_new_ma
 %{
     Variable X
 %}
-B_new_mix_P = (1 - 0.1) * P_mix_std;
+B_new_mix_P = k * (1 - 0.1) * P_mix_std;
 
 w_h_new_mix_P = N_h .* P_h_mix_s2 ./ sum(N_h .* P_h_mix_s2);
 
@@ -145,7 +145,7 @@ n_new_mix_P = round(sum([
 %{
     Variable Y
 %}
-B_new_mix_mu = (1 - 0.1) * mu_mix_std;
+B_new_mix_mu = k * (1 - 0.1) * mu_mix_std;
 
 w_h_new_mix_mu = N_h .* mu_h_mix_s2 ./ sum(N_h .* mu_h_mix_s2);
 

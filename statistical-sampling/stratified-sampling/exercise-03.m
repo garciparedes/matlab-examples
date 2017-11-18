@@ -33,7 +33,7 @@ n = 40;
 
 
 
-n_h = ceil(n .* N_h ./ sum( N_h ));
+n_h = round(n .* N_h ./ sum( N_h ));
 f_h = n_h ./ N_h;
 
 
@@ -91,9 +91,9 @@ B_mas = 0.9 * P_est_mas_bound;
 
 w_h_mas = N_h .* sqrt(P_est_mas_var) ./ sum(N_h .* sqrt(P_est_mas_var));
 
-n_mas_new = ceil(sum(W_h .^ 2 .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* w_h_mas)) ./ (B_mas ^ 2 / k ^ 2 + sum(W_h .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* N))))
+n_mas_new = round(sum(W_h .^ 2 .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* w_h_mas)) ./ (B_mas ^ 2 / k ^ 2 + sum(W_h .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* N))))
 
-n_h_mas_new = ceil(n_mas_new .* N_h .* P_est_mascon_sqrt ./ sum(N_h .* P_est_mascon_sqrt));
+n_h_mas_new = round(n_mas_new .* N_h .* P_est_mascon_sqrt ./ sum(N_h .* P_est_mascon_sqrt));
 f_h_mas_new = n_h_mas_new ./ N_h;
 
 i_1_mas_new = mas(N_h(1), n_h_mas_new(1));
@@ -123,9 +123,9 @@ B_mascon = 0.9 * P_est_mascon_bound;
 
 w_h_mascon = N_h .* sqrt(P_est_mascon_var) ./ sum(N_h .* sqrt(P_est_mascon_var));
 
-n_mascon_new = ceil(sum(W_h .^ 2 .* P_h_est_mascon .* (1 .- P_h_est_mascon) .* k .^ 2 ./ (B_mascon .^ 2 .* w_h_mascon)) + B_mascon^2 / k ^ 2)
+n_mascon_new = round(sum(W_h .^ 2 .* P_h_est_mascon .* (1 .- P_h_est_mascon) .* k .^ 2 ./ (B_mascon .^ 2 .* w_h_mascon)) + B_mascon^2 / k ^ 2)
 
-n_h_mascon_new = ceil(n_mascon_new .* N_h .* P_est_mas_new_sqrt ./ sum(N_h .* P_est_mas_new_sqrt));
+n_h_mascon_new = round(n_mascon_new .* N_h .* P_est_mas_new_sqrt ./ sum(N_h .* P_est_mas_new_sqrt));
 
 i_1_mascon_new = mascon(N_h(1), n_h_mascon_new(1));
 i_2_mascon_new = mascon(N_h(2), n_h_mascon_new(2));
