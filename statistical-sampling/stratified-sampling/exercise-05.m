@@ -72,11 +72,11 @@ p_h_est_ic = [(p_h_est - p_h_est_bound)', (p_h_est + p_h_est_bound)']
   3.1)  Encontrar el tamaño de muestra global para cometer el nuevo error.
 %}
 
-n
+
 B = p_est_bound;
-w_h = n_h ./ n;
-n_new = round(sum([
-  (W_h(1) .^ 2  .* s_h_S2(1) ./ w_h(1) ) ./ (B .^ 2 ./ k .^ 2 .+ W_h(1) .^ 2 .* s_h_S2(1) ./ N_h(1)),
+w_h = W_h;
+n_new = (sum([
+  (W_h(1) .^ 2  .* s_h_S2(1) ./ w_h(1) ) ./ (B .^ 2 ./ k .^ 2 .+ W_h(1) .* s_h_S2(1) ./ N),
   W_h(2) .^ 2 .* s_h_S2(2) .* k .^ 2 ./ (B .^ 2 .* w_h(2))
 ]))
 

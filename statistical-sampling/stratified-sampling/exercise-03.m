@@ -22,7 +22,7 @@ U_2 = DATA.mod2(:,2);
 U_3 = DATA.mod3(:,2);
 
 N_h = [size(U_1,1), size(U_2,1), size(U_3,1)];
-N = sum(N_h, 2);
+N = sum(N_h);
 
 W_h = N_h ./ N;
 
@@ -33,7 +33,7 @@ n = 40;
 
 
 
-n_h = round(n .* N_h ./ sum( N_h ));
+n_h = round(n .* W_h );
 f_h = n_h ./ N_h;
 
 
@@ -51,9 +51,11 @@ s_2_mas = U_2(i_2_mas);
 s_3_mas = U_3(i_3_mas);
 
 P_h_est_mas = [mean(s_1_mas), mean(s_2_mas), mean(s_3_mas)];
+P_h_est_mas_var = P_h_est_mas .* (1.- P_h_est_mas) .* n_h ./ (n_h .- 1);
+
 P_est_mas = sum(P_h_est_mas .* W_h)
 
-P_est_mas_var = sum(W_h .^ 2 .* (1 .- f_h) .* P_h_est_mas .* (1 .- P_h_est_mas) ./ (n_h .- 1));
+P_est_mas_var = sum(W_h .^ 2 .* (1 .- f_h) ./ n_h  .* P_h_est_mas_var);
 P_est_mas_sqrt = sqrt(P_est_mas_var);
 P_est_mas_bound = k * P_est_mas_sqrt;
 P_es_mast_ic = [P_est_mas - P_est_mas_bound, P_est_mas + P_est_mas_bound]
@@ -73,9 +75,11 @@ s_2_mascon = U_2(i_2_mascon);
 s_3_mascon = U_3(i_3_mascon);
 
 P_h_est_mascon = [mean(s_1_mascon), mean(s_2_mascon), mean(s_3_mascon)];
+P_h_est_mascon_var = P_h_est_mascon .* (1.- P_h_est_mascon) .* n_h ./ (n_h -1)
+
 P_est_mascon = sum(P_h_est_mascon .* W_h)
 
-P_est_mascon_var = sum(W_h .^ 2 .* P_h_est_mascon .* (1 .- P_h_est_mascon) ./ (n_h .- 1));
+P_est_mascon_var = sum(W_h .^ 2 ./ n_h .* P_h_est_mascon_var);
 P_est_mascon_sqrt = sqrt(P_est_mascon_var);
 P_est_mascon_bound = k * P_est_mascon_sqrt;
 P_est_mascon_ic = [P_est_mascon - P_est_mascon_bound, P_est_mascon + P_est_mascon_bound]
@@ -89,9 +93,9 @@ P_est_mascon_ic = [P_est_mascon - P_est_mascon_bound, P_est_mascon + P_est_masco
 %}
 B_mas = 0.9 * P_est_mas_bound;
 
-w_h_mas = N_h .* sqrt(P_est_mas_var) ./ sum(N_h .* sqrt(P_est_mas_var));
+w_h_mas = W_h;
 
-n_mas_new = round(sum(W_h .^ 2 .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* w_h_mas)) ./ (B_mas ^ 2 / k ^ 2 + sum(W_h .* P_est_mas .* (1 .- P_est_mas) .* N_h ./ ((N_h .- 1) .* N))))
+n_mas_new = round(sum(W_h .^ 2 .* P_h_est_mas_var ./ w_h_mas) ./ (B_mas ^ 2 / k ^ 2 + sum(W_h .* P_h_est_mas_var ./ N)))
 
 n_h_mas_new = round(n_mas_new .* N_h .* P_est_mascon_sqrt ./ sum(N_h .* P_est_mascon_sqrt));
 f_h_mas_new = n_h_mas_new ./ N_h;
@@ -121,9 +125,9 @@ P_es_mast_new_ic = [P_est_mas_new - P_est_mas_new_bound, P_est_mas_new + P_est_m
 
 B_mascon = 0.9 * P_est_mascon_bound;
 
-w_h_mascon = N_h .* sqrt(P_est_mascon_var) ./ sum(N_h .* sqrt(P_est_mascon_var));
+w_h_mascon = W_h;
 
-n_mascon_new = round(sum(W_h .^ 2 .* P_h_est_mascon .* (1 .- P_h_est_mascon) .* k .^ 2 ./ (B_mascon .^ 2 .* w_h_mascon)) + B_mascon^2 / k ^ 2)
+n_mascon_new = round(sum(W_h .^ 2 .* P_h_est_mascon_var .* k .^ 2 ./ (B_mascon .^ 2 .* w_h_mascon)))
 
 n_h_mascon_new = round(n_mascon_new .* N_h .* P_est_mas_new_sqrt ./ sum(N_h .* P_est_mas_new_sqrt));
 
