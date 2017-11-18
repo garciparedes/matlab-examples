@@ -133,14 +133,14 @@ n_new_mas_mu = round(sum(W_h .^ 2 .* mu_h_mas_s2 ./ w_h_new_mas_mu) ./ (B_new_ma
 %{
     Variable X
 %}
-B_new_mix_P = k * (1 - 0) * P_mix_std;
+B_new_mix_P = k * (1 - 0.1) * P_mix_std;
 
 w_h_new_mix_P = W_h;
 
-n_new_mix_P = round(sum([
-  (W_h(1) .^ 2 .* P_h_mix_s2(1) ./ w_h_new_mix_P(1)) ./ (B_new_mix_P .^ 2 ./ k .^ 2 .+ W_h(1) ./ N .* P_h_mas_s2(1)),
-  W_h(2) .^ 2 .* P_h_mix_s2(2) .* k .^ 2 ./ (B_new_mix_P .^ 2 .* w_h_new_mix_P(2))
-]))
+%{
+  TODO Fórmula de mas y mascon obtenida -> utilizar en el resto de casos 
+%}
+n_new_mix_P = round(sum(W_h .^ 2 .* P_h_mix_s2 ./ w_h_new_mix_P) ./ (B_new_mix_P .^ 2 ./ k .^ 2 .+ W_h(1) ./ N .* P_h_mas_s2(1)))
 
 %{
     Variable Y
