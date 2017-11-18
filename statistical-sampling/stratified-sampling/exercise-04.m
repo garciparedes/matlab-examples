@@ -115,10 +115,16 @@ mu_mix_ic = [mu_mix - mu_mix_bound, mu_mix + mu_mix_bound]
 %{
     Variable X
 %}
+B_new_mas_P = (1 - 0.1) * P_mas_std;
+
+n_new_mas_P = round(sum(W_h .* P_h_mas_s2) ./ (B_new_mas_P .^ 2 ./ k .^ 2 .+ sum(W_h ./ N .* P_h_mas_s2)))
 
 %{
     Variable Y
 %}
+B_new_mas_mu = (1 - 0.1) * mu_mas_std;
+
+n_new_mas_mu = round(sum(W_h .* mu_h_mas_s2) ./ (B_new_mas_mu .^ 2 ./ k .^ 2 .+ sum(W_h .^ 2 ./ N_h .* mu_h_mas_s2)))
 
 %{
   Muestreo m.a.s. en primer estrato y m.a.s.con en segundo
@@ -127,7 +133,10 @@ mu_mix_ic = [mu_mix - mu_mix_bound, mu_mix + mu_mix_bound]
 %{
     Variable X
 %}
+B_new_mix_P = (1 - 0.1) * P_mix_std;
+
 
 %{
     Variable Y
 %}
+B_new_mix_mu = (1 - 0.1) * mu_mix_std;
