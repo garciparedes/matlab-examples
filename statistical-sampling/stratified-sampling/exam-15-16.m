@@ -84,8 +84,35 @@ p_est_ic = [p_est - p_est_bound, p_est + p_est_bound]
   ii) La cantidad media del impuesto de basura por vivienda, por local y en total.
 %}
 
+mu_h_est = [mean(s_1(:, 1)), mean(s_2(:, 1))]
+
+s_h_mu_S2 = std(mu_h_est) .^ 2 .* n_h ./ (n_h .- 1);
+
+mu_h_est_var = (1 .- f_h) .* s_h_mu_S2 ./ n_h;
+mu_h_est_std = sqrt(mu_h_est_var);
+mu_h_est_bound = k * mu_h_est_std;
+mu_h_est_ic = [(mu_h_est - mu_h_est_bound)', (mu_h_est + mu_h_est_bound)']
+
+mu_est = sum(mu_h_est .* W_h)
+mu_est_var = sum(W_h .^ 2 .* mu_h_est_var);
+mu_est_std = sqrt(mu_est_var);
+mu_est_bound = k * mu_est_std;
+mu_est_ic = [mu_est - mu_est_bound, mu_est + mu_est_bound]
+
 %{
   iii) Plantear el cálculo del tamaño de muestra del apartado a) si se utiliza
   m.a.s. sin reemplazamiento en el primer estrato y m.a.s. con reemplazamiento
   en el segundo estrato.
 %}
+
+n_new = ceil(sum(W_h .^ 2 .* P_h_naive_var ./ w_h) ./ (B ^ 2 / k ^ 2 + sum(W_h(1) .* P_h_naive_var(1) ./ N)))
+
+%{
+  c) Encontrar el tamaño de muestra necesario para reducir un 15% el error de
+  estimación cometido en el apartado b)-ii) para estimar la cantidad media del
+  impuesto de basura en total.
+%}
+
+B_new = (1 - 0.15) * mu_est_bound
+
+n_new2 = round(sum(W_h .^ 2 .* s_h_mu_S2 ./ w_h ) ./ (B_new .^ 2 ./ k .^ 2 .+ sum(W_h .^ 2 .* s_h_mu_S2 ./ N_h ) ))
