@@ -81,4 +81,4 @@ n_new = round(sum( W_h .^ 2 ./ w_h .* s_h_S2 ) / (B .^ 2 / k ^ 2 + W_h(1) * s_h_
         que queremos.
 %}
 
-n_h_new = round(n_new .* (N_h .* s_h_S2) ./ sum(N_h .* s_h_S2))
+n_h_new = round(n_new .* (N_h .* sqrt(s_h_S2)) ./ sum(N_h .* sqrt(s_h_S2)))
