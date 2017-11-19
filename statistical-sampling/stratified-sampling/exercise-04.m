@@ -81,7 +81,7 @@ s_2_mascon = U_2(i_2_mascon, :);
 %}
 
 P_h_mix = [mean(s_1_mas(:,1)), mean(s_2_mascon(:,1))];
-P_h_mix_s2 = P_h_mix .* (1 .- P_h_mix) .* [n_h(1) ./ (n_h(1) .- 1), 1];
+P_h_mix_s2 = P_h_mix .* (1 .- P_h_mix) .* n_h ./ (n_h - 1);
 
 P_mix = sum(P_h_mix .* W_h)
 
@@ -95,7 +95,7 @@ P_mix_ic = [P_mix - P_mix_bound, P_mix + P_mix_bound]
 %}
 
 mu_h_mix = [mean(s_1_mas(:,2)), mean(s_2_mascon(:,2))];
-mu_h_mix_s2 = std(mu_h_mix) .^ 2 .* [n_h(1) ./ (n_h(1) .- 1), 1];
+mu_h_mix_s2 = std(mu_h_mix) .^ 2 .* n_h ./ (n_h - 1);
 
 mu_mix = sum(mu_h_mix .* W_h)
 mu_mix_var = sum(W_h .^ 2 .* (1 .- [f_h(1), 0]) ./ n_h .*  mu_h_mix_s2);
@@ -137,9 +137,6 @@ B_new_mix_P = k * (1 - 0.1) * P_mix_std;
 
 w_h_new_mix_P = W_h;
 
-%{
-  TODO Fórmula de mas y mascon obtenida -> utilizar en el resto de casos 
-%}
 n_new_mix_P = round(sum(W_h .^ 2 .* P_h_mix_s2 ./ w_h_new_mix_P) ./ (B_new_mix_P .^ 2 ./ k .^ 2 .+ W_h(1) ./ N .* P_h_mas_s2(1)))
 
 %{
@@ -149,10 +146,8 @@ B_new_mix_mu = k * (1 - 0.1) * mu_mix_std;
 
 w_h_new_mix_mu = W_h;
 
-n_new_mix_mu = round(sum([
-  (W_h(1) .^ 2 .* mu_h_mix_s2(1) ./ w_h_new_mix_mu(1)) ./ (B_new_mix_mu .^ 2 ./ k .^ 2 .+ W_h(1) ./ N .* mu_h_mas_s2(1))
-  W_h(2) .^ 2 .* mu_h_mix_s2(2) .* k .^ 2 ./ (B_new_mix_mu .^ 2 .* w_h_new_mix_mu(2))
-]))
+n_new_mix_mu = round(sum(W_h .^ 2 .* mu_h_mix_s2 ./ w_h_new_mix_mu) ./ (B_new_mix_mu ^ 2 / k ^ 2 + W_h(1) / N * mu_h_mas_s2(1)))
+
 
 %{
   Ahora presupuesto C = 1000 y c_1 = 70 y c_2 = 100

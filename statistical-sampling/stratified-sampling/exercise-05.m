@@ -41,7 +41,7 @@ s_2 = U_2(i_2);
 
 p_h_est = [mean(s_1), mean(s_2)];
 
-s_h_S2 = p_h_est .* (1 .- p_h_est) .* n_h(1) ./ (n_h(1) .- 1);
+s_h_S2 = p_h_est .* (1 .- p_h_est) .* n_h ./ (n_h - 1);
 
 p_est =  sum(p_h_est .* W_h)
 p_est_var = sum(W_h .^ 2 .* s_h_S2 .* (1 .- [f_h(1), 0])  ./ n_h)
@@ -72,15 +72,13 @@ p_h_est_ic = [(p_h_est - p_h_est_bound)', (p_h_est + p_h_est_bound)']
   3.1)  Encontrar el tamaño de muestra global para cometer el nuevo error.
 %}
 
-
-B = p_est_bound;
+B = (1 - 0.1) * p_est_bound;
 w_h = W_h;
-n_new = (sum([
-  (W_h(1) .^ 2  .* s_h_S2(1) ./ w_h(1) ) ./ (B .^ 2 ./ k .^ 2 .+ W_h(1) .* s_h_S2(1) ./ N),
-  W_h(2) .^ 2 .* s_h_S2(2) .* k .^ 2 ./ (B .^ 2 .* w_h(2))
-]))
+n_new = round(sum( W_h .^ 2 ./ w_h .* s_h_S2 ) / (B .^ 2 / k ^ 2 + W_h(1) * s_h_S2(1) / N))
 
 %{
   3.2)  Encontrar el tamaño de muestra en cada estrato para que el global sea el
         que queremos.
 %}
+
+n_h_new = round(n_new .* (N_h .* s_h_S2) ./ sum(N_h .* s_h_S2))

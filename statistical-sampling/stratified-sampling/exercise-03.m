@@ -97,7 +97,7 @@ w_h_mas = W_h;
 
 n_mas_new = round(sum(W_h .^ 2 .* P_h_est_mas_var ./ w_h_mas) ./ (B_mas ^ 2 / k ^ 2 + sum(W_h .* P_h_est_mas_var ./ N)))
 
-n_h_mas_new = round(n_mas_new .* N_h .* P_est_mascon_sqrt ./ sum(N_h .* P_est_mascon_sqrt));
+n_h_mas_new = round(n_mas_new .* N_h .* P_est_mas_sqrt ./ sum(N_h .* P_est_mas_sqrt));
 f_h_mas_new = n_h_mas_new ./ N_h;
 
 i_1_mas_new = mas(N_h(1), n_h_mas_new(1));
