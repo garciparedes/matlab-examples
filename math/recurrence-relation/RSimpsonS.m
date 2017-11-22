@@ -13,4 +13,6 @@
 
 function VI = RSimpsonS(f_, a, b)
   f = str2func(f_);
-  VI = 1/6 * (b - a) * f(a) + 4 / 6 *(b - a) * f(1 / 2 * (a + b)) + 1 / 6 * (b - a) * f(b);
+  VI = (1 / 6) .* (b - a) .* f(a) ...
+      + (4 / 6) .* (b - a) .* f((1 / 2) .* (a + b)) ...
+      + (1 / 6) .* (b - a) .* f(b);

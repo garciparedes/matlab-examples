@@ -13,4 +13,4 @@
 
 function VI = RPuntoMedioS(f_, a, b)
   f = str2func(f_);
-  VI = (b - a) * f(0.5 *  (a + b));
+  VI = (b - a) .* f(0.5 .*  (a + b));

@@ -59,4 +59,9 @@ E_2 = abs(I_2 - [J_tr_2, J_pm_2, J_si_2])
 %
 % Extra
 % ***************
-J_tr_comp = RTrapecioC(f_6_str, a_6, b_6_2, 20)
+
+J_tr_comp = RTrapecioC(f_6_str, a_6, b_6_2, 5)
+J_pm_comp = RPuntoMedioC(f_6_str, a_6, b_6_2, 5)
+J_si_comp = RSimpsonC(f_6_str, a_6, b_6_2, 5)
+
+E_2_comp = abs(I_2 - [J_tr_comp, J_pm_comp, J_si_comp])
