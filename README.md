@@ -1,5 +1,5 @@
 # Matlab Examples
-Set of awesome Matlab Examples Edit
+Set of awesome Matlab Examples.
 
 ## Contents
 
@@ -17,11 +17,8 @@ Set of awesome Matlab Examples Edit
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md)
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
 matlab-examples is licensed under the [Apache-2.0](LICENSE).
-
-## Like it? Awesome!
-If you find this tool useful, consider supporting or [buying me a beer](https://www.paypal.me/garciparedes/2):)
