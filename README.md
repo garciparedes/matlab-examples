@@ -1,13 +1,14 @@
-# matlab-examples
-
+# Matlab Examples
+Set of awesome Matlab Examples Edit
 
 ## Contents
 
-- [Statistical Sampling](statistical-sampling/)
-  - [Bernoulli Sampling](statistical-sampling/bernoulli/)
-  - [Simple Random Sampling](statistical-sampling/simple-random-sampling/)
-  - [Stratified Sampling](statistical-sampling/stratified-sampling/)
-
+  * [Statistical Sampling](statistical-sampling/)
+    * [Bernoulli Sampling](statistical-sampling/bernoulli/)
+    * [Simple Random Sampling](statistical-sampling/simple-random-sampling/)
+    * [Stratified Sampling](statistical-sampling/stratified-sampling/)
+  * [Numerical Integration](numerical-integration/)
+  * [Numerical Algebra](numerical-algebra/)
 
 ## Contributors
 
