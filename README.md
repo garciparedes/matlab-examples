@@ -7,8 +7,9 @@ Set of awesome Matlab Examples Edit
     * [Bernoulli Sampling](statistical-sampling/bernoulli/)
     * [Simple Random Sampling](statistical-sampling/simple-random-sampling/)
     * [Stratified Sampling](statistical-sampling/stratified-sampling/)
-  * [Numerical Integration](numerical-integration/)
-  * [Numerical Algebra](numerical-algebra/)
+  * [Numerical Methods](numerical-methods/)
+    * [Numerical Integration](numerical-methods/numerical-integration/)
+    * [Numerical Algebra](numerical-methods/numerical-algebra/)
 
 ## Contributors
 
